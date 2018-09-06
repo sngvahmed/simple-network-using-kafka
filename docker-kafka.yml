@@ -26,8 +26,8 @@ services:
     container_name: zookeeper0
     image: hyperledger/fabric-zookeeper
     environment:
-      ZOO_MY_ID: '1'
-      ZOO_SERVERS: server.1=zookeeper0:2888:3888
+      ZOO_MY_ID: '0'
+      ZOO_SERVERS: server.0=zookeeper0:2888:3888
     restart: always
     ports:
     - 2181:2181/tcp
@@ -45,7 +45,6 @@ services:
       FABRIC_CA_SERVER_TLS_CERTFILE: /etc/hyperledger/fabric-ca-server-config/ca_peerOrg1-cert.pem
       FABRIC_CA_SERVER_TLS_ENABLED: "True"
       FABRIC_CA_SERVER_TLS_KEYFILE: /etc/hyperledger/fabric-ca-server-config/key_sk
-      'TZ: UTC': null
     image: hyperledger/fabric-ca:x86_64-1.1.0
     networks:
       sample: null
@@ -75,7 +74,6 @@ services:
       CORE_PEER_TLS_ROOTCERT_FILE: /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org1_orange_com/peers/peer0_org1_orange_com/tls/ca.crt
       CORE_VM_ENDPOINT: unix:///host/var/run/docker.sock
       GOPATH: /opt/gopath
-      'TZ: UTC': null
     hostname: fabric-cli
     image: hyperledger/fabric-tools:x86_64-1.1.0
     links:
@@ -120,7 +118,6 @@ services:
       ORDERER_GENERAL_TLS_ENABLED: "True"
       ORDERER_GENERAL_TLS_PRIVATEKEY: /var/hyperledger/orderer/tls/server.key
       ORDERER_GENERAL_TLS_ROOTCAS: '[/var/hyperledger/orderer/tls/ca.crt]'
-      'TZ: UTC': null
     image: hyperledger/fabric-orderer:x86_64-1.1.0
     networks:
       sample: null

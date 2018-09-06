@@ -35,7 +35,7 @@ Orderer: &OrdererDefaults
         PreferredMaxBytes: 512 KB
     Kafka:
         Brokers:
-              - kafka0_orange_com:9092
+          - kafka0_orange_com:9092
     Organizations:
 
 Profiles:
