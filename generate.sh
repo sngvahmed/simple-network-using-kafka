@@ -1,5 +1,6 @@
 rm channel-artifacts/*
 rm -r crypto-config
+
 cryptogen generate --config=crypto-config.yaml —-output=crypto-config
 
 configtxgen -profile OrgsChannel -outputCreateChannelTx channel.tx -channelID mychannel
