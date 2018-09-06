@@ -6,7 +6,7 @@ services:
     depends_on:
     - zookeeper0_orange_com
     - zookeeper1_orange_com
-    - zookeeper2.example.com
+    - zookeeper2_orange_com
     environment:
       KAFKA_BROKER_ID: '0'
       KAFKA_DEFAULT_REPLICATION_FACTOR: '3'
@@ -14,7 +14,7 @@ services:
       KAFKA_MIN_INSYNC_REPLICAS: '2'
       KAFKA_REPLICA_FETCH_MAX_BYTES: '103809024'
       KAFKA_UNCLEAN_LEADER_ELECTION_ENABLE: "false"
-      KAFKA_ZOOKEEPER_CONNECT: zookeeper0_orange_com:2181,zookeeper1_orange_com:2181,zookeeper2.example.com:2181
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper0_orange_com:2181,zookeeper1_orange_com:2181,zookeeper2_orange_com:2181
     image: hyperledger/fabric-kafka
     networks:
       sample: null
@@ -27,7 +27,7 @@ services:
     depends_on:
     - zookeeper0_orange_com
     - zookeeper1_orange_com
-    - zookeeper2.example.com
+    - zookeeper2_orange_com
     environment:
       KAFKA_BROKER_ID: '1'
       KAFKA_DEFAULT_REPLICATION_FACTOR: '3'
@@ -35,7 +35,7 @@ services:
       KAFKA_MIN_INSYNC_REPLICAS: '2'
       KAFKA_REPLICA_FETCH_MAX_BYTES: '103809024'
       KAFKA_UNCLEAN_LEADER_ELECTION_ENABLE: "false"
-      KAFKA_ZOOKEEPER_CONNECT: zookeeper0_orange_com:2181,zookeeper1_orange_com:2181,zookeeper2.example.com:2181
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper0_orange_com:2181,zookeeper1_orange_com:2181,zookeeper2_orange_com:2181
     image: hyperledger/fabric-kafka
     networks:
       sample: null
@@ -48,7 +48,7 @@ services:
     depends_on:
     - zookeeper0_orange_com
     - zookeeper1_orange_com
-    - zookeeper2.example.com
+    - zookeeper2_orange_com
     environment:
       KAFKA_BROKER_ID: '2'
       KAFKA_DEFAULT_REPLICATION_FACTOR: '3'
@@ -56,7 +56,7 @@ services:
       KAFKA_MIN_INSYNC_REPLICAS: '2'
       KAFKA_REPLICA_FETCH_MAX_BYTES: '103809024'
       KAFKA_UNCLEAN_LEADER_ELECTION_ENABLE: "false"
-      KAFKA_ZOOKEEPER_CONNECT: zookeeper0_orange_com:2181,zookeeper1_orange_com:2181,zookeeper2.example.com:2181
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper0_orange_com:2181,zookeeper1_orange_com:2181,zookeeper2_orange_com:2181
     image: hyperledger/fabric-kafka
     networks:
       sample: null
@@ -69,7 +69,7 @@ services:
     depends_on:
     - zookeeper0_orange_com
     - zookeeper1_orange_com
-    - zookeeper2.example.com
+    - zookeeper2_orange_com
     environment:
       KAFKA_BROKER_ID: '3'
       KAFKA_DEFAULT_REPLICATION_FACTOR: '3'
@@ -77,7 +77,7 @@ services:
       KAFKA_MIN_INSYNC_REPLICAS: '2'
       KAFKA_REPLICA_FETCH_MAX_BYTES: '103809024'
       KAFKA_UNCLEAN_LEADER_ELECTION_ENABLE: "false"
-      KAFKA_ZOOKEEPER_CONNECT: zookeeper0_orange_com:2181,zookeeper1_orange_com:2181,zookeeper2.example.com:2181
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper0_orange_com:2181,zookeeper1_orange_com:2181,zookeeper2_orange_com:2181
     image: hyperledger/fabric-kafka
     networks:
       sample: null
@@ -90,7 +90,7 @@ services:
     environment:
       ZOO_MY_ID: '1'
       ZOO_SERVERS: server.1=zookeeper0_orange_com:2888:3888 server.2=zookeeper1_orange_com:2888:3888
-        server.3=zookeeper2.example.com:2888:3888
+        server.3=zookeeper2_orange_com:2888:3888
     image: hyperledger/fabric-zookeeper
     networks:
       sample: null
@@ -104,7 +104,7 @@ services:
     environment:
       ZOO_MY_ID: '2'
       ZOO_SERVERS: server.1=zookeeper0_orange_com:2888:3888 server.2=zookeeper1_orange_com:2888:3888
-        server.3=zookeeper2.example.com:2888:3888
+        server.3=zookeeper2_orange_com:2888:3888
     image: hyperledger/fabric-zookeeper
     networks:
       sample: null
@@ -113,12 +113,12 @@ services:
     - 12888:2888/tcp
     - 13888:3888/tcp
     restart: always
-  zookeeper2.example.com:
-    container_name: zookeeper2.example.com
+  zookeeper2_orange_com:
+    container_name: zookeeper2_orange_com
     environment:
       ZOO_MY_ID: '3'
       ZOO_SERVERS: server.1=zookeeper0_orange_com:2888:3888 server.2=zookeeper1_orange_com:2888:3888
-        server.3=zookeeper2.example.com:2888:3888
+        server.3=zookeeper2_orange_com:2888:3888
     image: hyperledger/fabric-zookeeper
     networks:
       sample: null
@@ -199,6 +199,8 @@ services:
     environment:
       ORDERER_KAFKA_RETRY_SHORTINTERVAL: 1s
       ORDERER_KAFKA_RETRY_SHORTTOTAL: 30s
+      CONFIGTX_ORDERER_ORDERERTYPE: kafka
+      CONFIGTX_ORDERER_KAFKA_BROKERS: [kafka0_orange_com:9092,kafka1_orange_com:9092,kafka2_orange_com:9092,kafka3_orange_com:9092]
       ORDERER_KAFKA_VERBOSE: "true"
       ORDERER_GENERAL_GENESISFILE: /var/hyperledger/orderer/orderer.genesis.block
       ORDERER_GENERAL_GENESISMETHOD: file
