@@ -11,7 +11,7 @@ echo
 echo
 echo
 
-sleep 10;
+sleep 50;
 
 function testServer() {
     echo "Waiting to server $1 ...."
@@ -25,8 +25,6 @@ function testServer() {
 }
 
 
-testServer 'orderer_orange_com:7050'
-testServer 'peer0_org1_orange_com:7051'
 CHANNEL_NAME="mychannel"
 DELAY=3
 COUNTER=1
@@ -56,7 +54,7 @@ createChannel() {
         peer channel create -o orderer_orange_com:7050 -c $CHANNEL_NAME -f ./channel-artifacts/channel.tx --tls $CORE_PEER_TLS_ENABLED --cafile $ORDERER_CA >&log.txt
     fi
     res=$?
-    #cat log.txt
+    cat log.txt
     verifyResult $res "Channel creation failed"
     echo "===================== Channel "$CHANNEL_NAME" is created successfully ===================== "
     echo
