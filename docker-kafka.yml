@@ -17,7 +17,7 @@ services:
       KAFKA_ZOOKEEPER_CONNECT: zookeeper0.example.com:2181,zookeeper1.example.com:2181,zookeeper2.example.com:2181
     image: hyperledger/fabric-kafka
     networks:
-      byfn: null
+      sample: null
     ports:
     - 9092:9092/tcp
     - 9093:9093/tcp
@@ -38,7 +38,7 @@ services:
       KAFKA_ZOOKEEPER_CONNECT: zookeeper0.example.com:2181,zookeeper1.example.com:2181,zookeeper2.example.com:2181
     image: hyperledger/fabric-kafka
     networks:
-      byfn: null
+      sample: null
     ports:
     - 10092:9092/tcp
     - 10093:9093/tcp
@@ -59,7 +59,7 @@ services:
       KAFKA_ZOOKEEPER_CONNECT: zookeeper0.example.com:2181,zookeeper1.example.com:2181,zookeeper2.example.com:2181
     image: hyperledger/fabric-kafka
     networks:
-      byfn: null
+      sample: null
     ports:
     - 11092:9092/tcp
     - 11093:9093/tcp
@@ -80,7 +80,7 @@ services:
       KAFKA_ZOOKEEPER_CONNECT: zookeeper0.example.com:2181,zookeeper1.example.com:2181,zookeeper2.example.com:2181
     image: hyperledger/fabric-kafka
     networks:
-      byfn: null
+      sample: null
     ports:
     - 12092:9092/tcp
     - 12093:9093/tcp
@@ -93,7 +93,7 @@ services:
         server.3=zookeeper2.example.com:2888:3888
     image: hyperledger/fabric-zookeeper
     networks:
-      byfn: null
+      sample: null
     ports:
     - 2181:2181/tcp
     - 2888:2888/tcp
@@ -107,7 +107,7 @@ services:
         server.3=zookeeper2.example.com:2888:3888
     image: hyperledger/fabric-zookeeper
     networks:
-      byfn: null
+      sample: null
     ports:
     - 12181:2181/tcp
     - 12888:2888/tcp
@@ -121,7 +121,7 @@ services:
         server.3=zookeeper2.example.com:2888:3888
     image: hyperledger/fabric-zookeeper
     networks:
-      byfn: null
+      sample: null
     ports:
     - 22181:2181/tcp
     - 22888:2888/tcp
