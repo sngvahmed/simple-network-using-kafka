@@ -1,3 +1,13 @@
+Organizations:
+- ID: OrdererMSP
+  MSPDir: crypto-config/ordererOrganizations/orange_com/msp
+  Name: OrdererOrg
+- AnchorPeers:
+  - Host: peer0_org1_orange_com
+    Port: 7051
+  ID: Org1MSP
+  MSPDir: crypto-config/peerOrganizations/org1_orange_com/msp
+  Name: Org1MSP
 Application:
   Organizations: null
 Capabilities:
@@ -7,6 +17,7 @@ Capabilities:
     V1_1: true
   Orderer:
     V1_1: true
+
 Orderer:
   Addresses:
   - orderer_orange_com:7050
@@ -19,19 +30,10 @@ Orderer:
     V1_1: true
   Kafka:
     Brokers:
-    - kafka0:9092
+    - kafka0_orange_com:9092
   OrdererType: kafka
   Organizations: null
-Organizations:
-- ID: OrdererMSP
-  MSPDir: crypto-config/ordererOrganizations/orange_com/msp
-  Name: OrdererOrg
-- AnchorPeers:
-  - Host: peer0_org1_orange_com
-    Port: 7051
-  ID: Org1MSP
-  MSPDir: crypto-config/peerOrganizations/org1_orange_com/msp
-  Name: Org1MSP
+
 Profiles:
   OrgsChannel:
     Application:
@@ -67,7 +69,7 @@ Profiles:
         V1_1: true
       Kafka:
         Brokers:
-        - kafka0:9092
+        - kafka0_orange_com:9092
       OrdererType: kafka
       Organizations:
       - ID: OrdererMSP

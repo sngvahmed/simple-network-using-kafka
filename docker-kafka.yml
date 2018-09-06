@@ -1,8 +1,8 @@
 networks:
   sample: {}
 services:
-  kafka0:
-    container_name: kafka0
+  kafka0_orange_com:
+    container_name: kafka0_orange_com
     networks:
        sample: null
     image: hyperledger/fabric-kafka
@@ -131,7 +131,7 @@ services:
     - orderer_orange_com:/var/hyperledger/production/orderer:rw
     working_dir: /opt/gopath/src/github.com/hyperledger/fabric
     depends_on:
-    - kafka0
+    - kafka0_orange_com
   peer0_org1_orange_com:
     command: peer node start
     depends_on:
