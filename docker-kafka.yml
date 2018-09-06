@@ -137,7 +137,7 @@ services:
       FABRIC_CA_SERVER_TLS_CERTFILE: /etc/hyperledger/fabric-ca-server-config/ca_peerOrg1-cert.pem
       FABRIC_CA_SERVER_TLS_ENABLED: "True"
       FABRIC_CA_SERVER_TLS_KEYFILE: /etc/hyperledger/fabric-ca-server-config/key_sk
-    image: 'hyperledger/fabric-ca:'
+    image: 'hyperledger/fabric-ca:latest'
     networks:
       sample: null
     ports:
@@ -167,7 +167,7 @@ services:
       CORE_VM_ENDPOINT: unix:///host/var/run/docker.sock
       GOPATH: /opt/gopath
     hostname: fabric-cli
-    image: 'hyperledger/fabric-tools:'
+    image: 'hyperledger/fabric-tools:latest'
     links:
     - orderer_orange_com
     - peer0_org1_orange_com
@@ -210,7 +210,7 @@ services:
       ORDERER_GENERAL_TLS_ENABLED: "True"
       ORDERER_GENERAL_TLS_PRIVATEKEY: /var/hyperledger/orderer/tls/server.key
       ORDERER_GENERAL_TLS_ROOTCAS: '[/var/hyperledger/orderer/tls/ca.crt]'
-    image: 'hyperledger/fabric-orderer:'
+    image: 'hyperledger/fabric-orderer:latest'
     networks:
       sample: null
     ports:
@@ -250,7 +250,7 @@ services:
       CORE_PEER_TLS_ROOTCERT_FILE: /etc/hyperledger/fabric/tls/ca.crt
       CORE_VM_DOCKER_HOSTCONFIG_NETWORKMODE: project1_sample
       CORE_VM_ENDPOINT: unix:///host/var/run/docker.sock
-    image: 'hyperledger/fabric-peer:'
+    image: 'hyperledger/fabric-peer:latest'
     networks:
       sample: null
     ports:
