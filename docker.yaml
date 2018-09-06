@@ -18,7 +18,7 @@ services:
     ports:
     - 7054:7054/tcp
     volumes:
-    - /crypto-config/peerOrganizations/org1_orange_com/ca:/etc/hyperledger/fabric-ca-server-config:rw
+    - ${SNGV_DIR}/crypto-config/peerOrganizations/org1_orange_com/ca:/etc/hyperledger/fabric-ca-server-config:rw
   ca_peerorg2:
     command: sh -c 'fabric-ca-server start --ca.certfile /etc/hyperledger/fabric-ca-server-config/ca_peerorg2-cert.pem
       --ca.keyfile /etc/hyperledger/fabric-ca-server-config/key_sk -b admin:PwD4AdminCA
@@ -36,7 +36,7 @@ services:
     ports:
     - 8054:7054/tcp
     volumes:
-    - /crypto-config/peerOrganizations/org2_orange_com/ca:/etc/hyperledger/fabric-ca-server-config:rw
+    - ${SNGV_DIR}/crypto-config/peerOrganizations/org2_orange_com/ca:/etc/hyperledger/fabric-ca-server-config:rw
   cli:
     command: /bin/bash -c './scripts/init.sh;'
     depends_on:
@@ -57,7 +57,6 @@ services:
       CORE_PEER_TLS_ROOTCERT_FILE: /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org1_orange_com/peers/peer0_org1_orange_com/tls/ca.crt
       CORE_VM_ENDPOINT: unix:///host/var/run/docker.sock
       GOPATH: /opt/gopath
-      'TZ: UTC': null
     hostname: fabric-cli
     image: hyperledger/fabric-tools:x86_64-1.1.0
     links:
@@ -74,10 +73,10 @@ services:
     tty: true
     volumes:
     - /var/run:/host/var/run:rw
-    - /chaincode:/opt/gopath/src/github.com/hyperledger/fabric/chaincode:rw
-    - /crypto-config:/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto:rw
-    - /scripts:/opt/gopath/src/github.com/hyperledger/fabric/peer/scripts:rw
-    - /channel-artifacts:/opt/gopath/src/github.com/hyperledger/fabric/peer/channel-artifacts:rw
+    - ${SNGV_DIR}/chaincode:/opt/gopath/src/github.com/hyperledger/fabric/chaincode:rw
+    - ${SNGV_DIR}/crypto-config:/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto:rw
+    - ${SNGV_DIR}/scripts:/opt/gopath/src/github.com/hyperledger/fabric/peer/scripts:rw
+    - ${SNGV_DIR}/channel-artifacts:/opt/gopath/src/github.com/hyperledger/fabric/peer/channel-artifacts:rw
     working_dir: /opt/gopath/src/github.com/hyperledger/fabric/peer
   couchdb0:
     environment:
@@ -110,16 +109,15 @@ services:
       ORDERER_GENERAL_TLS_ENABLED: "True"
       ORDERER_GENERAL_TLS_PRIVATEKEY: /var/hyperledger/orderer/tls/server.key
       ORDERER_GENERAL_TLS_ROOTCAS: '[/var/hyperledger/orderer/tls/ca.crt]'
-      'TZ: UTC': null
     image: hyperledger/fabric-orderer:x86_64-1.1.0
     networks:
       sample: null
     ports:
     - 7050:7050/tcp
     volumes:
-    - /crypto-config/ordererOrganizations/orange_com/orderers/orderer0_orange_com/msp:/var/hyperledger/orderer/msp:rw
-    - /channel-artifacts/genesis.block:/var/hyperledger/orderer/orderer.genesis.block:rw
-    - /crypto-config/ordererOrganizations/orange_com/orderers/orderer0_orange_com/tls:/var/hyperledger/orderer/tls:rw
+    - ${SNGV_DIR}/crypto-config/ordererOrganizations/orange_com/orderers/orderer0_orange_com/msp:/var/hyperledger/orderer/msp:rw
+    - ${SNGV_DIR}/channel-artifacts/genesis.block:/var/hyperledger/orderer/orderer.genesis.block:rw
+    - ${SNGV_DIR}/crypto-config/ordererOrganizations/orange_com/orderers/orderer0_orange_com/tls:/var/hyperledger/orderer/tls:rw
     - orderer0_orange_com:/var/hyperledger/production/orderer:rw
     working_dir: /opt/gopath/src/github.com/hyperledger/fabric
   peer0_org1_orange_com:
@@ -154,8 +152,8 @@ services:
     - 7051:7051/tcp
     - 7053:7053/tcp
     volumes:
-    - /crypto-config/peerOrganizations/org1_orange_com/peers/peer0_org1_orange_com/msp:/etc/hyperledger/fabric/msp:rw
-    - /crypto-config/peerOrganizations/org1_orange_com/peers/peer0_org1_orange_com/tls:/etc/hyperledger/fabric/tls:rw
+    - ${SNGV_DIR}/crypto-config/peerOrganizations/org1_orange_com/peers/peer0_org1_orange_com/msp:/etc/hyperledger/fabric/msp:rw
+    - ${SNGV_DIR}/crypto-config/peerOrganizations/org1_orange_com/peers/peer0_org1_orange_com/tls:/etc/hyperledger/fabric/tls:rw
     - /var/run:/host/var/run:rw
     - peer0_org1_orange_com:/var/hyperledger/production:rw
     working_dir: /opt/gopath/src/github.com/hyperledger/fabric/peer
@@ -191,8 +189,8 @@ services:
     - 8051:7051/tcp
     - 8053:7053/tcp
     volumes:
-    - /crypto-config/peerOrganizations/org2_orange_com/peers/peer0_org2_orange_com/msp:/etc/hyperledger/fabric/msp:rw
-    - /crypto-config/peerOrganizations/org2_orange_com/peers/peer0_org2_orange_com/tls:/etc/hyperledger/fabric/tls:rw
+    - ${SNGV_DIR}/crypto-config/peerOrganizations/org2_orange_com/peers/peer0_org2_orange_com/msp:/etc/hyperledger/fabric/msp:rw
+    - ${SNGV_DIR}/crypto-config/peerOrganizations/org2_orange_com/peers/peer0_org2_orange_com/tls:/etc/hyperledger/fabric/tls:rw
     - /var/run:/host/var/run:rw
     - peer0_org2_orange_com:/var/hyperledger/production:rw
     working_dir: /opt/gopath/src/github.com/hyperledger/fabric/peer
