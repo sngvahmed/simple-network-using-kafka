@@ -20,7 +20,7 @@ Capabilities:
     Orderer: &OrdererCapabilities
         V1_1: true
     Application: &ApplicationCapabilities
-        V1_2: true
+        V1_2: false
 
 Application: &ApplicationDefaults
     Organizations:
