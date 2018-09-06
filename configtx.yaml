@@ -25,7 +25,7 @@ Capabilities:
 Application: &ApplicationDefaults
     Organizations:
 Orderer: &OrdererDefaults
-    OrdererType: solo
+    OrdererType: kafka
     Addresses:
           - orderer_orange_com:7050
     BatchTimeout: 2s
@@ -36,6 +36,9 @@ Orderer: &OrdererDefaults
     Kafka:
         Brokers:
           - kafka0_orange_com:9092
+          - kafka1_orange_com:9092
+          - kafka2_orange_com:9092
+          - kafka3_orange_com:9092
     Organizations:
 
 Profiles:
