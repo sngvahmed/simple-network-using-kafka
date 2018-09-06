@@ -1,65 +1,95 @@
-
-Organizations:
-    - &OrdererOrg
-        Name: OrdererOrg
-        ID: OrdererMSP
-        MSPDir: crypto-config/ordererOrganizations/orange_com/msp
-
-    - &Org1
-        Name: Org1MSP
-        ID: Org1MSP
-        MSPDir: crypto-config/peerOrganizations/org1_orange_com/msp
-
-        AnchorPeers:
-            - Host: peer0_org1_orange_com
-              Port: 7051
-
+Application:
+  Organizations: null
 Capabilities:
-    Global: &ChannelCapabilities
-        V1_1: true
-    Orderer: &OrdererCapabilities
-        V1_1: true
-    Application: &ApplicationCapabilities
-        V1_1: true
-
-Application: &ApplicationDefaults
-    Organizations:
-Orderer: &OrdererDefaults
-    OrdererType: kafka
-    Addresses:
-          - orderer_orange_com:7050
-    BatchTimeout: 2s
-    BatchSize:
-        MaxMessageCount: 10
-        AbsoluteMaxBytes: 99 MB
-        PreferredMaxBytes: 512 KB
-    Kafka:
-        Brokers:
-          - kafka0_orange_com:9092
-          - kafka1_orange_com:9092
-          - kafka2_orange_com:9092
-          - kafka3_orange_com:9092
-    Organizations:
-
+  Application:
+    V1_1: true
+  Global:
+    V1_1: true
+  Orderer:
+    V1_1: true
+Orderer:
+  Addresses:
+  - orderer0_orange_com:7050
+  - orderer1_orange_com:8050
+  BatchSize:
+    AbsoluteMaxBytes: 99 MB
+    MaxMessageCount: 10
+    PreferredMaxBytes: 512 KB
+  BatchTimeout: 2s
+  Capabilities:
+    V1_1: true
+  Kafka:
+    Brokers:
+    - 127.0.0.1:9092
+  OrdererType: solo
+  Organizations: null
+Organizations:
+- ID: OrdererMSP
+  MSPDir: crypto-config/ordererOrganizations/orange_com/msp
+  Name: OrdererOrg
+- AnchorPeers:
+  - Host: peer0_org1_orange_com
+    Port: 7051
+  ID: org1MSP
+  MSPDir: crypto-config/peerOrganizations/org1_orange_com/msp
+  Name: org1MSP
+- AnchorPeers:
+  - Host: peer0_org2_orange_com
+    Port: 7051
+  ID: org2MSP
+  MSPDir: crypto-config/peerOrganizations/org2_orange_com/msp
+  Name: org2MSP
 Profiles:
-    OrgsOrdererGenesis:
-        Capabilities:
-            <<: *ChannelCapabilities
-        Orderer:
-            <<: *OrdererDefaults
-            Organizations:
-                - *OrdererOrg
-            Capabilities:
-                <<: *OrdererCapabilities
-        Consortiums:
-            SampleConsortium:
-                Organizations:
-                    - *Org1
-    OrgsChannel:
-        Consortium: SampleConsortium
-        Application:
-            <<: *ApplicationDefaults
-            Organizations:
-                - *Org1
-            Capabilities:
-                <<: *ApplicationCapabilities
+  OrgsChannel:
+    Application:
+      Organizations:
+      - AnchorPeers:
+        - Host: peer0_org1_orange_com
+          Port: 7051
+        ID: org1MSP
+        MSPDir: crypto-config/peerOrganizations/org1_orange_com/msp
+        Name: org1MSP
+      - AnchorPeers:
+        - Host: peer0_org2_orange_com
+          Port: 7051
+        ID: org2MSP
+        MSPDir: crypto-config/peerOrganizations/org2_orange_com/msp
+        Name: org2MSP
+    Consortium: SampleConsortium
+  OrgsOrdererGenesis:
+    Capabilities:
+      V1_1: true
+    Consortiums:
+      SampleConsortium:
+        Organizations:
+        - AnchorPeers:
+          - Host: peer0_org1_orange_com
+            Port: 7051
+          ID: org1MSP
+          MSPDir: crypto-config/peerOrganizations/org1_orange_com/msp
+          Name: org1MSP
+        - AnchorPeers:
+          - Host: peer0_org2_orange_com
+            Port: 7051
+          ID: org2MSP
+          MSPDir: crypto-config/peerOrganizations/org2_orange_com/msp
+          Name: org2MSP
+    Orderer:
+      Addresses:
+      - orderer0_orange_com:7050
+      - orderer1_orange_com:8050
+      BatchSize:
+        AbsoluteMaxBytes: 99 MB
+        MaxMessageCount: 10
+        PreferredMaxBytes: 512 KB
+      BatchTimeout: 2s
+      Capabilities:
+        V1_1: true
+      Kafka:
+        Brokers:
+        - 127.0.0.1:9092
+      OrdererType: solo
+      Organizations:
+      - ID: OrdererMSP
+        MSPDir: crypto-config/ordererOrganizations/orange_com/msp
+        Name: OrdererOrg

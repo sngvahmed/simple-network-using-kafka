@@ -2,16 +2,28 @@ OrdererOrgs:
 - Domain: orange_com
   Name: orderer
   Specs:
-  - CommonName: orderer_orange_com
-    Hostname: orderer_orange_com
+  - CommonName: orderer0_orange_com
+    Hostname: orderer0_orange_com
+  - CommonName: orderer1_orange_com
+    Hostname: orderer1_orange_com
 PeerOrgs:
 - CA:
-    CommonName: ca_peerOrg1
-    Hostname: ca_peerOrg1
+    CommonName: ca_peerorg1
+    Hostname: ca_peerorg1
   Domain: org1_orange_com
-  Name: Org1
+  Name: org1
   Specs:
   - CommonName: peer0_org1_orange_com
     Hostname: peer0_org1_orange_com
+  Users:
+    Count: 1
+- CA:
+    CommonName: ca_peerorg2
+    Hostname: ca_peerorg2
+  Domain: org2_orange_com
+  Name: org2
+  Specs:
+  - CommonName: peer0_org2_orange_com
+    Hostname: peer0_org2_orange_com
   Users:
     Count: 1

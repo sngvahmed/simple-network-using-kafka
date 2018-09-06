@@ -1,12 +1,44 @@
 networks:
-  sample: {}
+  byfn: {}
 services:
-  kafka0_orange_com:
-    container_name: kafka0_orange_com
+  cli:
+    container_name: cli
     depends_on:
-    - zookeeper0_orange_com
-    - zookeeper1_orange_com
-    - zookeeper2_orange_com
+    - orderer0.example.com
+    - orderer1.example.com
+    - peer0.org1.example.com
+    - peer0.org2.example.com
+    - peer1.org1.example.com
+    - peer1.org2.example.com
+    environment:
+      CORE_LOGGING_LEVEL: DEBUG
+      CORE_PEER_ADDRESS: peer0.org1.example.com:7051
+      CORE_PEER_ID: cli
+      CORE_PEER_LOCALMSPID: Org1MSP
+      CORE_PEER_MSPCONFIGPATH: /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org1.example.com/users/Admin@org1.example.com/msp
+      CORE_PEER_TLS_CERT_FILE: /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org1.example.com/peers/peer0.org1.example.com/tls/server.crt
+      CORE_PEER_TLS_ENABLED: "true"
+      CORE_PEER_TLS_KEY_FILE: /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org1.example.com/peers/peer0.org1.example.com/tls/server.key
+      CORE_PEER_TLS_ROOTCERT_FILE: /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org1.example.com/peers/peer0.org1.example.com/tls/ca.crt
+      CORE_VM_ENDPOINT: unix:///host/var/run/docker.sock
+      GOPATH: /opt/gopath
+    image: 'hyperledger/fabric-tools:'
+    networks:
+      byfn: null
+    tty: true
+    volumes:
+    - /var/run:/host/var/run:rw
+    - /opt/cello/fabric-sample-with-kafka/first-network/examples/chaincode:/opt/gopath/src/github.com/chaincode:rw
+    - /opt/cello/fabric-sample-with-kafka/first-network/crypto-config:/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto:rw
+    - /opt/cello/fabric-sample-with-kafka/first-network/scripts:/opt/gopath/src/github.com/hyperledger/fabric/peer/scripts:rw
+    - /opt/cello/fabric-sample-with-kafka/first-network/channel-artifacts:/opt/gopath/src/github.com/hyperledger/fabric/peer/channel-artifacts:rw
+    working_dir: /opt/gopath/src/github.com/hyperledger/fabric/peer
+  kafka0.example.com:
+    container_name: kafka0.example.com
+    depends_on:
+    - zookeeper0.example.com
+    - zookeeper1.example.com
+    - zookeeper2.example.com
     environment:
       KAFKA_BROKER_ID: '0'
       KAFKA_DEFAULT_REPLICATION_FACTOR: '3'
@@ -14,20 +46,20 @@ services:
       KAFKA_MIN_INSYNC_REPLICAS: '2'
       KAFKA_REPLICA_FETCH_MAX_BYTES: '103809024'
       KAFKA_UNCLEAN_LEADER_ELECTION_ENABLE: "false"
-      KAFKA_ZOOKEEPER_CONNECT: zookeeper0_orange_com:2181,zookeeper1_orange_com:2181,zookeeper2_orange_com:2181
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper0.example.com:2181,zookeeper1.example.com:2181,zookeeper2.example.com:2181
     image: hyperledger/fabric-kafka
     networks:
-      sample: null
+      byfn: null
     ports:
     - 9092:9092/tcp
     - 9093:9093/tcp
     restart: always
-  kafka1_orange_com:
-    container_name: kafka1_orange_com
+  kafka1.example.com:
+    container_name: kafka1.example.com
     depends_on:
-    - zookeeper0_orange_com
-    - zookeeper1_orange_com
-    - zookeeper2_orange_com
+    - zookeeper0.example.com
+    - zookeeper1.example.com
+    - zookeeper2.example.com
     environment:
       KAFKA_BROKER_ID: '1'
       KAFKA_DEFAULT_REPLICATION_FACTOR: '3'
@@ -35,20 +67,20 @@ services:
       KAFKA_MIN_INSYNC_REPLICAS: '2'
       KAFKA_REPLICA_FETCH_MAX_BYTES: '103809024'
       KAFKA_UNCLEAN_LEADER_ELECTION_ENABLE: "false"
-      KAFKA_ZOOKEEPER_CONNECT: zookeeper0_orange_com:2181,zookeeper1_orange_com:2181,zookeeper2_orange_com:2181
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper0.example.com:2181,zookeeper1.example.com:2181,zookeeper2.example.com:2181
     image: hyperledger/fabric-kafka
     networks:
-      sample: null
+      byfn: null
     ports:
     - 10092:9092/tcp
     - 10093:9093/tcp
     restart: always
-  kafka2_orange_com:
-    container_name: kafka2_orange_com
+  kafka2.example.com:
+    container_name: kafka2.example.com
     depends_on:
-    - zookeeper0_orange_com
-    - zookeeper1_orange_com
-    - zookeeper2_orange_com
+    - zookeeper0.example.com
+    - zookeeper1.example.com
+    - zookeeper2.example.com
     environment:
       KAFKA_BROKER_ID: '2'
       KAFKA_DEFAULT_REPLICATION_FACTOR: '3'
@@ -56,20 +88,20 @@ services:
       KAFKA_MIN_INSYNC_REPLICAS: '2'
       KAFKA_REPLICA_FETCH_MAX_BYTES: '103809024'
       KAFKA_UNCLEAN_LEADER_ELECTION_ENABLE: "false"
-      KAFKA_ZOOKEEPER_CONNECT: zookeeper0_orange_com:2181,zookeeper1_orange_com:2181,zookeeper2_orange_com:2181
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper0.example.com:2181,zookeeper1.example.com:2181,zookeeper2.example.com:2181
     image: hyperledger/fabric-kafka
     networks:
-      sample: null
+      byfn: null
     ports:
     - 11092:9092/tcp
     - 11093:9093/tcp
     restart: always
-  kafka3_orange_com:
-    container_name: kafka3_orange_com
+  kafka3.example.com:
+    container_name: kafka3.example.com
     depends_on:
-    - zookeeper0_orange_com
-    - zookeeper1_orange_com
-    - zookeeper2_orange_com
+    - zookeeper0.example.com
+    - zookeeper1.example.com
+    - zookeeper2.example.com
     environment:
       KAFKA_BROKER_ID: '3'
       KAFKA_DEFAULT_REPLICATION_FACTOR: '3'
@@ -77,131 +109,23 @@ services:
       KAFKA_MIN_INSYNC_REPLICAS: '2'
       KAFKA_REPLICA_FETCH_MAX_BYTES: '103809024'
       KAFKA_UNCLEAN_LEADER_ELECTION_ENABLE: "false"
-      KAFKA_ZOOKEEPER_CONNECT: zookeeper0_orange_com:2181,zookeeper1_orange_com:2181,zookeeper2_orange_com:2181
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper0.example.com:2181,zookeeper1.example.com:2181,zookeeper2.example.com:2181
     image: hyperledger/fabric-kafka
     networks:
-      sample: null
+      byfn: null
     ports:
     - 12092:9092/tcp
     - 12093:9093/tcp
     restart: always
-  zookeeper0_orange_com:
-    container_name: zookeeper0_orange_com
-    environment:
-      ZOO_MY_ID: '1'
-      ZOO_SERVERS: server.1=zookeeper0_orange_com:2888:3888 server.2=zookeeper1_orange_com:2888:3888
-        server.3=zookeeper2_orange_com:2888:3888
-    image: hyperledger/fabric-zookeeper
-    networks:
-      sample: null
-    ports:
-    - 2181:2181/tcp
-    - 2888:2888/tcp
-    - 3888:3888/tcp
-    restart: always
-  zookeeper1_orange_com:
-    container_name: zookeeper1_orange_com
-    environment:
-      ZOO_MY_ID: '2'
-      ZOO_SERVERS: server.1=zookeeper0_orange_com:2888:3888 server.2=zookeeper1_orange_com:2888:3888
-        server.3=zookeeper2_orange_com:2888:3888
-    image: hyperledger/fabric-zookeeper
-    networks:
-      sample: null
-    ports:
-    - 12181:2181/tcp
-    - 12888:2888/tcp
-    - 13888:3888/tcp
-    restart: always
-  zookeeper2_orange_com:
-    container_name: zookeeper2_orange_com
-    environment:
-      ZOO_MY_ID: '3'
-      ZOO_SERVERS: server.1=zookeeper0_orange_com:2888:3888 server.2=zookeeper1_orange_com:2888:3888
-        server.3=zookeeper2_orange_com:2888:3888
-    image: hyperledger/fabric-zookeeper
-    networks:
-      sample: null
-    ports:
-    - 22181:2181/tcp
-    - 22888:2888/tcp
-    - 23888:3888/tcp
-    restart: always
-  ca_peerOrg1:
-    command: sh -c 'fabric-ca-server start --ca.certfile /etc/hyperledger/fabric-ca-server-config/ca_peerOrg1-cert.pem
-      --ca.keyfile /etc/hyperledger/fabric-ca-server-config/key_sk -b admin:PwD4AdminCA
-      -d'
-    environment:
-      FABRIC_CA_HOME: /etc/hyperledger/fabric-ca-server
-      FABRIC_CA_SERVER_CA_NAME: ca_peerOrg1
-      FABRIC_CA_SERVER_TLS_CERTFILE: /etc/hyperledger/fabric-ca-server-config/ca_peerOrg1-cert.pem
-      FABRIC_CA_SERVER_TLS_ENABLED: "True"
-      FABRIC_CA_SERVER_TLS_KEYFILE: /etc/hyperledger/fabric-ca-server-config/key_sk
-    image: 'hyperledger/fabric-ca:latest'
-    networks:
-      sample: null
-    ports:
-    - 7054:7054/tcp
-    volumes:
-    - ${SNGV_DIR}/crypto-config/peerOrganizations/org1_orange_com/ca:/etc/hyperledger/fabric-ca-server-config:rw
-  cli:
-    deploy:
-      restart_policy:
-        condition: none
-        delay: 60s
-    command: /bin/bash -c './scripts/init.sh;'
+  orderer0.example.com:
+    command: orderer
+    container_name: orderer0.example.com
     depends_on:
-    - ca_peerOrg1
-    - orderer_orange_com
-    - peer0_org1_orange_com
+    - kafka0.example.com
+    - kafka1.example.com
+    - kafka2.example.com
+    - kafka3.example.com
     environment:
-      CORE_LOGGING_LEVEL: DEBUG
-      CORE_PEER_ADDRESS: peer0_org1_orange_com:7051
-      CORE_PEER_ID: cli
-      CORE_PEER_LOCALMSPID: Org1MSP
-      CORE_PEER_MSPCONFIGPATH: /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org1_orange_com/users/Admin@org1_orange_com/msp
-      CORE_PEER_TLS_CERT_FILE: /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org1_orange_com/peers/peer0_org1_orange_com/tls/server.crt
-      CORE_PEER_TLS_ENABLED: "True"
-      CORE_PEER_TLS_KEY_FILE: /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org1_orange_com/peers/peer0_org1_orange_com/tls/server.key
-      CORE_PEER_TLS_ROOTCERT_FILE: /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org1_orange_com/peers/peer0_org1_orange_com/tls/ca.crt
-      CORE_VM_ENDPOINT: unix:///host/var/run/docker.sock
-      GOPATH: /opt/gopath
-    hostname: fabric-cli
-    image: 'hyperledger/fabric-tools:latest'
-    links:
-    - orderer_orange_com
-    - peer0_org1_orange_com
-    - ca_peerOrg1
-    networks:
-      sample: null
-    ports:
-    - 5050:5050/tcp
-    stdin_open: true
-    tty: true
-    volumes:
-    - /var/run:/host/var/run:rw
-    - ${SNGV_DIR}/chaincode:/opt/gopath/src/github.com/hyperledger/fabric/chaincode:rw
-    - ${SNGV_DIR}/crypto-config:/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto:rw
-    - ${SNGV_DIR}/scripts:/opt/gopath/src/github.com/hyperledger/fabric/peer/scripts:rw
-    - ${SNGV_DIR}/channel-artifacts:/opt/gopath/src/github.com/hyperledger/fabric/peer/channel-artifacts:rw
-    working_dir: /opt/gopath/src/github.com/hyperledger/fabric/peer
-  couchdb0:
-    environment:
-      COUCHDB_PASSWORD: couchdb_pwd0
-      COUCHDB_USER: couchdb_user0
-    image: hyperledger/fabric-couchdb
-    networks:
-      sample: null
-    ports:
-    - 5984:5984/tcp
-  orderer_orange_com:
-    command: sleep 10000; orderer
-    environment:
-      ORDERER_KAFKA_RETRY_SHORTINTERVAL: 1s
-      ORDERER_KAFKA_RETRY_SHORTTOTAL: 30s
-      CONFIGTX_ORDERER_ORDERERTYPE: kafka
-      CONFIGTX_ORDERER_KAFKA_BROKERS: kafka0_orange_com:9092,kafka1_orange_com:9092,kafka2_orange_com:9092,kafka3_orange_com:9092
-      ORDERER_KAFKA_VERBOSE: "true"
       ORDERER_GENERAL_GENESISFILE: /var/hyperledger/orderer/orderer.genesis.block
       ORDERER_GENERAL_GENESISMETHOD: file
       ORDERER_GENERAL_LISTENADDRESS: 0.0.0.0
@@ -209,62 +133,226 @@ services:
       ORDERER_GENERAL_LOCALMSPID: OrdererMSP
       ORDERER_GENERAL_LOGLEVEL: debug
       ORDERER_GENERAL_TLS_CERTIFICATE: /var/hyperledger/orderer/tls/server.crt
-      ORDERER_GENERAL_TLS_ENABLED: "True"
+      ORDERER_GENERAL_TLS_ENABLED: "true"
       ORDERER_GENERAL_TLS_PRIVATEKEY: /var/hyperledger/orderer/tls/server.key
       ORDERER_GENERAL_TLS_ROOTCAS: '[/var/hyperledger/orderer/tls/ca.crt]'
-    image: 'hyperledger/fabric-orderer:latest'
+      ORDERER_KAFKA_RETRY_SHORTINTERVAL: 1s
+      ORDERER_KAFKA_RETRY_SHORTTOTAL: 30s
+      ORDERER_KAFKA_VERBOSE: "true"
+    image: 'hyperledger/fabric-orderer:'
     networks:
-      sample: null
+      byfn: null
     ports:
     - 7050:7050/tcp
     volumes:
-    - ${SNGV_DIR}/crypto-config/ordererOrganizations/orange_com/orderers/orderer_orange_com/msp:/var/hyperledger/orderer/msp:rw
-    - ${SNGV_DIR}/channel-artifacts/genesis.block:/var/hyperledger/orderer/orderer.genesis.block:rw
-    - ${SNGV_DIR}/crypto-config/ordererOrganizations/orange_com/orderers/orderer_orange_com/tls:/var/hyperledger/orderer/tls:rw
-    - orderer_orange_com:/var/hyperledger/production/orderer:rw
+    - /opt/cello/fabric-sample-with-kafka/first-network/crypto-config/ordererOrganizations/example.com/orderers/orderer0.example.com/msp:/var/hyperledger/orderer/msp:rw
+    - /opt/cello/fabric-sample-with-kafka/first-network/channel-artifacts/genesis.block:/var/hyperledger/orderer/orderer.genesis.block:rw
+    - /opt/cello/fabric-sample-with-kafka/first-network/crypto-config/ordererOrganizations/example.com/orderers/orderer0.example.com/tls:/var/hyperledger/orderer/tls:rw
     working_dir: /opt/gopath/src/github.com/hyperledger/fabric
+  orderer1.example.com:
+    command: orderer
+    container_name: orderer1.example.com
     depends_on:
-    - kafka0_orange_com
-    - kafka1_orange_com
-    - kafka2_orange_com
-    - kafka3_orange_com
-  peer0_org1_orange_com:
-    command: peer node start
-    depends_on:
-    - couchdb0
+    - kafka0.example.com
+    - kafka1.example.com
+    - kafka2.example.com
+    - kafka3.example.com
     environment:
-      CORE_LEDGER_STATE_COUCHDBCONFIG_COUCHDBADDRESS: couchdb0:5984
-      CORE_LEDGER_STATE_COUCHDBCONFIG_PASSWORD: couchdb_pwd0
-      CORE_LEDGER_STATE_COUCHDBCONFIG_USERNAME: couchdb_user0
-      CORE_LEDGER_STATE_STATEDATABASE: CouchDB
-      CORE_LOGGING_LEVEL: DEBUG
-      CORE_PEER_ADDRESS: peer0_org1_orange_com:7051
-      CORE_PEER_CHAINCODELISTENADDRESS: 0.0.0.0:7052
-      CORE_PEER_GOSSIP_EXTERNALENDPOINT: peer0_org1_orange_com:7051
+      ORDERER_GENERAL_GENESISFILE: /var/hyperledger/orderer/orderer.genesis.block
+      ORDERER_GENERAL_GENESISMETHOD: file
+      ORDERER_GENERAL_LISTENADDRESS: 0.0.0.0
+      ORDERER_GENERAL_LOCALMSPDIR: /var/hyperledger/orderer/msp
+      ORDERER_GENERAL_LOCALMSPID: OrdererMSP
+      ORDERER_GENERAL_LOGLEVEL: debug
+      ORDERER_GENERAL_TLS_CERTIFICATE: /var/hyperledger/orderer/tls/server.crt
+      ORDERER_GENERAL_TLS_ENABLED: "true"
+      ORDERER_GENERAL_TLS_PRIVATEKEY: /var/hyperledger/orderer/tls/server.key
+      ORDERER_GENERAL_TLS_ROOTCAS: '[/var/hyperledger/orderer/tls/ca.crt]'
+      ORDERER_KAFKA_RETRY_SHORTINTERVAL: 1s
+      ORDERER_KAFKA_RETRY_SHORTTOTAL: 30s
+      ORDERER_KAFKA_VERBOSE: "true"
+    image: 'hyperledger/fabric-orderer:'
+    networks:
+      byfn: null
+    ports:
+    - 8050:8050/tcp
+    volumes:
+    - /opt/cello/fabric-sample-with-kafka/first-network/crypto-config/ordererOrganizations/example.com/orderers/orderer1.example.com/msp:/var/hyperledger/orderer/msp:rw
+    - /opt/cello/fabric-sample-with-kafka/first-network/channel-artifacts/genesis.block:/var/hyperledger/orderer/orderer.genesis.block:rw
+    - /opt/cello/fabric-sample-with-kafka/first-network/crypto-config/ordererOrganizations/example.com/orderers/orderer1.example.com/tls:/var/hyperledger/orderer/tls:rw
+    working_dir: /opt/gopath/src/github.com/hyperledger/fabric
+  peer0.org1.example.com:
+    command: peer node start
+    container_name: peer0.org1.example.com
+    environment:
+      CORE_LOGGING_LEVEL: INFO
+      CORE_PEER_ADDRESS: peer0.org1.example.com:7051
+      CORE_PEER_GOSSIP_BOOTSTRAP: peer1.org1.example.com:7051
+      CORE_PEER_GOSSIP_EXTERNALENDPOINT: peer0.org1.example.com:7051
       CORE_PEER_GOSSIP_ORGLEADER: "false"
       CORE_PEER_GOSSIP_USELEADERELECTION: "true"
-      CORE_PEER_ID: peer0_org1_orange_com
+      CORE_PEER_ID: peer0.org1.example.com
       CORE_PEER_LOCALMSPID: Org1MSP
       CORE_PEER_PROFILE_ENABLED: "true"
       CORE_PEER_TLS_CERT_FILE: /etc/hyperledger/fabric/tls/server.crt
-      CORE_PEER_TLS_ENABLED: "True"
+      CORE_PEER_TLS_ENABLED: "true"
       CORE_PEER_TLS_KEY_FILE: /etc/hyperledger/fabric/tls/server.key
       CORE_PEER_TLS_ROOTCERT_FILE: /etc/hyperledger/fabric/tls/ca.crt
-      CORE_VM_DOCKER_HOSTCONFIG_NETWORKMODE: project1_sample
+      CORE_VM_DOCKER_HOSTCONFIG_NETWORKMODE: net_byfn
       CORE_VM_ENDPOINT: unix:///host/var/run/docker.sock
-    image: 'hyperledger/fabric-peer:latest'
+    image: 'hyperledger/fabric-peer:'
     networks:
-      sample: null
+      byfn: null
     ports:
     - 7051:7051/tcp
     - 7053:7053/tcp
     volumes:
-    - ${SNGV_DIR}/crypto-config/peerOrganizations/org1_orange_com/peers/peer0_org1_orange_com/msp:/etc/hyperledger/fabric/msp:rw
-    - ${SNGV_DIR}/crypto-config/peerOrganizations/org1_orange_com/peers/peer0_org1_orange_com/tls:/etc/hyperledger/fabric/tls:rw
+    - /opt/cello/fabric-sample-with-kafka/first-network/crypto-config/peerOrganizations/org1.example.com/peers/peer0.org1.example.com/msp:/etc/hyperledger/fabric/msp:rw
+    - /opt/cello/fabric-sample-with-kafka/first-network/crypto-config/peerOrganizations/org1.example.com/peers/peer0.org1.example.com/tls:/etc/hyperledger/fabric/tls:rw
     - /var/run:/host/var/run:rw
-    - peer0_org1_orange_com:/var/hyperledger/production:rw
+    - peer0.org1.example.com:/var/hyperledger/production:rw
     working_dir: /opt/gopath/src/github.com/hyperledger/fabric/peer
-version: '3.0'
+  peer0.org2.example.com:
+    command: peer node start
+    container_name: peer0.org2.example.com
+    environment:
+      CORE_LOGGING_LEVEL: INFO
+      CORE_PEER_ADDRESS: peer0.org2.example.com:7051
+      CORE_PEER_GOSSIP_BOOTSTRAP: peer1.org2.example.com:7051
+      CORE_PEER_GOSSIP_EXTERNALENDPOINT: peer0.org2.example.com:7051
+      CORE_PEER_GOSSIP_ORGLEADER: "false"
+      CORE_PEER_GOSSIP_USELEADERELECTION: "true"
+      CORE_PEER_ID: peer0.org2.example.com
+      CORE_PEER_LOCALMSPID: Org2MSP
+      CORE_PEER_PROFILE_ENABLED: "true"
+      CORE_PEER_TLS_CERT_FILE: /etc/hyperledger/fabric/tls/server.crt
+      CORE_PEER_TLS_ENABLED: "true"
+      CORE_PEER_TLS_KEY_FILE: /etc/hyperledger/fabric/tls/server.key
+      CORE_PEER_TLS_ROOTCERT_FILE: /etc/hyperledger/fabric/tls/ca.crt
+      CORE_VM_DOCKER_HOSTCONFIG_NETWORKMODE: net_byfn
+      CORE_VM_ENDPOINT: unix:///host/var/run/docker.sock
+    image: 'hyperledger/fabric-peer:'
+    networks:
+      byfn: null
+    ports:
+    - 9051:7051/tcp
+    - 9053:7053/tcp
+    volumes:
+    - /opt/cello/fabric-sample-with-kafka/first-network/crypto-config/peerOrganizations/org2.example.com/peers/peer0.org2.example.com/msp:/etc/hyperledger/fabric/msp:rw
+    - /opt/cello/fabric-sample-with-kafka/first-network/crypto-config/peerOrganizations/org2.example.com/peers/peer0.org2.example.com/tls:/etc/hyperledger/fabric/tls:rw
+    - /var/run:/host/var/run:rw
+    - peer0.org2.example.com:/var/hyperledger/production:rw
+    working_dir: /opt/gopath/src/github.com/hyperledger/fabric/peer
+  peer1.org1.example.com:
+    command: peer node start
+    container_name: peer1.org1.example.com
+    environment:
+      CORE_LOGGING_LEVEL: INFO
+      CORE_PEER_ADDRESS: peer1.org1.example.com:7051
+      CORE_PEER_GOSSIP_BOOTSTRAP: peer0.org1.example.com:7051
+      CORE_PEER_GOSSIP_EXTERNALENDPOINT: peer1.org1.example.com:7051
+      CORE_PEER_GOSSIP_ORGLEADER: "false"
+      CORE_PEER_GOSSIP_USELEADERELECTION: "true"
+      CORE_PEER_ID: peer1.org1.example.com
+      CORE_PEER_LOCALMSPID: Org1MSP
+      CORE_PEER_PROFILE_ENABLED: "true"
+      CORE_PEER_TLS_CERT_FILE: /etc/hyperledger/fabric/tls/server.crt
+      CORE_PEER_TLS_ENABLED: "true"
+      CORE_PEER_TLS_KEY_FILE: /etc/hyperledger/fabric/tls/server.key
+      CORE_PEER_TLS_ROOTCERT_FILE: /etc/hyperledger/fabric/tls/ca.crt
+      CORE_VM_DOCKER_HOSTCONFIG_NETWORKMODE: net_byfn
+      CORE_VM_ENDPOINT: unix:///host/var/run/docker.sock
+    image: 'hyperledger/fabric-peer:'
+    networks:
+      byfn: null
+    ports:
+    - 8051:7051/tcp
+    - 8053:7053/tcp
+    volumes:
+    - /opt/cello/fabric-sample-with-kafka/first-network/crypto-config/peerOrganizations/org1.example.com/peers/peer1.org1.example.com/msp:/etc/hyperledger/fabric/msp:rw
+    - /opt/cello/fabric-sample-with-kafka/first-network/crypto-config/peerOrganizations/org1.example.com/peers/peer1.org1.example.com/tls:/etc/hyperledger/fabric/tls:rw
+    - /var/run:/host/var/run:rw
+    - peer1.org1.example.com:/var/hyperledger/production:rw
+    working_dir: /opt/gopath/src/github.com/hyperledger/fabric/peer
+  peer1.org2.example.com:
+    command: peer node start
+    container_name: peer1.org2.example.com
+    environment:
+      CORE_LOGGING_LEVEL: INFO
+      CORE_PEER_ADDRESS: peer1.org2.example.com:7051
+      CORE_PEER_GOSSIP_BOOTSTRAP: peer0.org2.example.com:7051
+      CORE_PEER_GOSSIP_EXTERNALENDPOINT: peer1.org2.example.com:7051
+      CORE_PEER_GOSSIP_ORGLEADER: "false"
+      CORE_PEER_GOSSIP_USELEADERELECTION: "true"
+      CORE_PEER_ID: peer1.org2.example.com
+      CORE_PEER_LOCALMSPID: Org2MSP
+      CORE_PEER_PROFILE_ENABLED: "true"
+      CORE_PEER_TLS_CERT_FILE: /etc/hyperledger/fabric/tls/server.crt
+      CORE_PEER_TLS_ENABLED: "true"
+      CORE_PEER_TLS_KEY_FILE: /etc/hyperledger/fabric/tls/server.key
+      CORE_PEER_TLS_ROOTCERT_FILE: /etc/hyperledger/fabric/tls/ca.crt
+      CORE_VM_DOCKER_HOSTCONFIG_NETWORKMODE: net_byfn
+      CORE_VM_ENDPOINT: unix:///host/var/run/docker.sock
+    image: 'hyperledger/fabric-peer:'
+    networks:
+      byfn: null
+    ports:
+    - 10051:7051/tcp
+    - 10053:7053/tcp
+    volumes:
+    - /opt/cello/fabric-sample-with-kafka/first-network/crypto-config/peerOrganizations/org2.example.com/peers/peer1.org2.example.com/msp:/etc/hyperledger/fabric/msp:rw
+    - /opt/cello/fabric-sample-with-kafka/first-network/crypto-config/peerOrganizations/org2.example.com/peers/peer1.org2.example.com/tls:/etc/hyperledger/fabric/tls:rw
+    - /var/run:/host/var/run:rw
+    - peer1.org2.example.com:/var/hyperledger/production:rw
+    working_dir: /opt/gopath/src/github.com/hyperledger/fabric/peer
+  zookeeper0.example.com:
+    container_name: zookeeper0.example.com
+    environment:
+      ZOO_MY_ID: '1'
+      ZOO_SERVERS: server.1=zookeeper0.example.com:2888:3888 server.2=zookeeper1.example.com:2888:3888
+        server.3=zookeeper2.example.com:2888:3888
+    image: hyperledger/fabric-zookeeper
+    networks:
+      byfn: null
+    ports:
+    - 2181:2181/tcp
+    - 2888:2888/tcp
+    - 3888:3888/tcp
+    restart: always
+  zookeeper1.example.com:
+    container_name: zookeeper1.example.com
+    environment:
+      ZOO_MY_ID: '2'
+      ZOO_SERVERS: server.1=zookeeper0.example.com:2888:3888 server.2=zookeeper1.example.com:2888:3888
+        server.3=zookeeper2.example.com:2888:3888
+    image: hyperledger/fabric-zookeeper
+    networks:
+      byfn: null
+    ports:
+    - 12181:2181/tcp
+    - 12888:2888/tcp
+    - 13888:3888/tcp
+    restart: always
+  zookeeper2.example.com:
+    container_name: zookeeper2.example.com
+    environment:
+      ZOO_MY_ID: '3'
+      ZOO_SERVERS: server.1=zookeeper0.example.com:2888:3888 server.2=zookeeper1.example.com:2888:3888
+        server.3=zookeeper2.example.com:2888:3888
+    image: hyperledger/fabric-zookeeper
+    networks:
+      byfn: null
+    ports:
+    - 22181:2181/tcp
+    - 22888:2888/tcp
+    - 23888:3888/tcp
+    restart: always
+version: '2.0'
 volumes:
-  orderer_orange_com: {}
-  peer0_org1_orange_com: {}
+  orderer0.example.com: {}
+  orderer1.example.com: {}
+  peer0.org1.example.com: {}
+  peer0.org2.example.com: {}
+  peer1.org1.example.com: {}
+  peer1.org2.example.com: {}
+
