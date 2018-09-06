@@ -1,0 +1,75 @@
+Application:
+  Organizations: null
+Capabilities:
+  Application:
+    V1_1: true
+  Global:
+    V1_1: true
+  Orderer:
+    V1_1: true
+Orderer:
+  Addresses:
+  - orderer_orange_com:7050
+  BatchSize:
+    AbsoluteMaxBytes: 99 MB
+    MaxMessageCount: 10
+    PreferredMaxBytes: 512 KB
+  BatchTimeout: 2s
+  Capabilities:
+    V1_1: true
+  Kafka:
+    Brokers:
+    - 127.0.0.1:9092
+  OrdererType: kafka
+  Organizations: null
+Organizations:
+- ID: OrdererMSP
+  MSPDir: crypto-config/ordererOrganizations/orange_com/msp
+  Name: OrdererOrg
+- AnchorPeers:
+  - Host: peer0_org1_orange_com
+    Port: 7051
+  ID: Org1MSP
+  MSPDir: crypto-config/peerOrganizations/org1_orange_com/msp
+  Name: Org1MSP
+Profiles:
+  OrgsChannel:
+    Application:
+      Organizations:
+      - AnchorPeers:
+        - Host: peer0_org1_orange_com
+          Port: 7051
+        ID: Org1MSP
+        MSPDir: crypto-config/peerOrganizations/org1_orange_com/msp
+        Name: Org1MSP
+    Consortium: SampleConsortium
+  OrgsOrdererGenesis:
+    Capabilities:
+      V1_1: true
+    Consortiums:
+      SampleConsortium:
+        Organizations:
+        - AnchorPeers:
+          - Host: peer0_org1_orange_com
+            Port: 7051
+          ID: Org1MSP
+          MSPDir: crypto-config/peerOrganizations/org1_orange_com/msp
+          Name: Org1MSP
+    Orderer:
+      Addresses:
+      - orderer_orange_com:7050
+      BatchSize:
+        AbsoluteMaxBytes: 99 MB
+        MaxMessageCount: 10
+        PreferredMaxBytes: 512 KB
+      BatchTimeout: 2s
+      Capabilities:
+        V1_1: true
+      Kafka:
+        Brokers:
+        - 127.0.0.1:9092
+      OrdererType: kafka
+      Organizations:
+      - ID: OrdererMSP
+        MSPDir: crypto-config/ordererOrganizations/orange_com/msp
+        Name: OrdererOrg
