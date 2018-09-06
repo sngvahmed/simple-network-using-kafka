@@ -104,6 +104,7 @@ services:
     - 5984:5984/tcp
   orderer_orange_com:
     command: orderer
+    restart: always
     environment:
       ORDERER_KAFKA_RETRY_SHORTINTERVAL: 1s
       ORDERER_KAFKA_RETRY_SHORTTOTAL: 30s
