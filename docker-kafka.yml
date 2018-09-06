@@ -8,6 +8,8 @@ services:
     image: hyperledger/fabric-kafka
     restart: always
     environment:
+      KAFKA_ADVERTISED_HOST_NAME: kafka0_orange_com
+      KAFKA_ADVERTISED_PORT: 9092
       KAFKA_BROKER_ID: '0'
       KAFKA_DEFAULT_REPLICATION_FACTOR: '1'
       KAFKA_MESSAGE_MAX_BYTES: '103809024'
