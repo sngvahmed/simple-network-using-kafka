@@ -25,7 +25,7 @@ Capabilities:
 Application: &ApplicationDefaults
     Organizations:
 Orderer: &OrdererDefaults
-    OrdererType: kafka
+    OrdererType: solo
     Addresses:
           - orderer_orange_com:7050
     BatchTimeout: 2s
