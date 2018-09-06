@@ -14,6 +14,9 @@ services:
       KAFKA_REPLICA_FETCH_MAX_BYTES: '103809024'
       KAFKA_UNCLEAN_LEADER_ELECTION_ENABLE: "false"
       KAFKA_ZOOKEEPER_CONNECT: zookeeper0_orange_com:2181
+    ports:
+    - 9092:9092/tcp
+    - 9093:9093/tcp
     depends_on:
       - zookeeper0_orange_com
   zookeeper0_orange_com:
@@ -23,6 +26,10 @@ services:
       ZOO_MY_ID: '1'
       ZOO_SERVERS: server.1=zookeeper0_orange_com:2888:3888
     restart: always
+    ports:
+    - 2181:2181/tcp
+    - 2888:2888/tcp
+    - 3888:3888/tcp
     networks:
       sample: null
   ca_peerOrg1:

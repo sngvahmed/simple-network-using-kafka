@@ -1,2 +1,4 @@
-export SNGV_DIR=/home/worker1/kafka_test
+source .env
+bash generate.sh
+
 docker-compose -f docker-kafka.yml up

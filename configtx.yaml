@@ -19,7 +19,7 @@ Orderer:
     V1_1: true
   Kafka:
     Brokers:
-    - 127.0.0.1:9092
+    - kafka0_orange_com:9092
   OrdererType: kafka
   Organizations: null
 Organizations:
@@ -67,7 +67,7 @@ Profiles:
         V1_1: true
       Kafka:
         Brokers:
-        - 127.0.0.1:9092
+        - kafka0_orange_com:9092
       OrdererType: kafka
       Organizations:
       - ID: OrdererMSP
