@@ -1,30 +1,31 @@
 networks:
   sample: {}
 services:
-  kafka0_orange_com:
+  kafka0:
+    container_name: kafka0
     networks:
        sample: null
     image: hyperledger/fabric-kafka
     restart: always
     environment:
       KAFKA_BROKER_ID: '0'
-      KAFKA_DEFAULT_REPLICATION_FACTOR: '3'
+      KAFKA_DEFAULT_REPLICATION_FACTOR: '1'
       KAFKA_MESSAGE_MAX_BYTES: '103809024'
-      KAFKA_MIN_INSYNC_REPLICAS: '2'
+      KAFKA_MIN_INSYNC_REPLICAS: '1'
       KAFKA_REPLICA_FETCH_MAX_BYTES: '103809024'
       KAFKA_UNCLEAN_LEADER_ELECTION_ENABLE: "false"
-      KAFKA_ZOOKEEPER_CONNECT: zookeeper0_orange_com:2181
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper0:2181
     ports:
     - 9092:9092/tcp
     - 9093:9093/tcp
     depends_on:
-      - zookeeper0_orange_com
-  zookeeper0_orange_com:
-    container_name: zookeeper0_orange_com
+      - zookeeper0
+  zookeeper0:
+    container_name: zookeeper0
     image: hyperledger/fabric-zookeeper
     environment:
       ZOO_MY_ID: '1'
-      ZOO_SERVERS: server.1=zookeeper0_orange_com:2888:3888
+      ZOO_SERVERS: server.1=zookeeper0:2888:3888
     restart: always
     ports:
     - 2181:2181/tcp
@@ -130,7 +131,7 @@ services:
     - orderer_orange_com:/var/hyperledger/production/orderer:rw
     working_dir: /opt/gopath/src/github.com/hyperledger/fabric
     depends_on:
-    - kafka0_orange_com
+    - kafka0
   peer0_org1_orange_com:
     command: peer node start
     depends_on:
