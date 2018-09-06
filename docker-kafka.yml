@@ -1,12 +1,12 @@
 networks:
   sample: {}
 services:
-  kafka0_orange_com:
-    container_name: kafka0_orange_com
+  kafka0.example.com:
+    container_name: kafka0.example.com
     depends_on:
-    - zookeeper0_orange_com
-    - zookeeper1_orange_com
-    - zookeeper2_orange_com
+    - zookeeper0.example.com
+    - zookeeper1.example.com
+    - zookeeper2.example.com
     environment:
       KAFKA_BROKER_ID: '0'
       KAFKA_DEFAULT_REPLICATION_FACTOR: '3'
@@ -14,20 +14,20 @@ services:
       KAFKA_MIN_INSYNC_REPLICAS: '2'
       KAFKA_REPLICA_FETCH_MAX_BYTES: '103809024'
       KAFKA_UNCLEAN_LEADER_ELECTION_ENABLE: "false"
-      KAFKA_ZOOKEEPER_CONNECT: zookeeper0_orange_com:2181,zookeeper1_orange_com:2181,zookeeper2_orange_com:2181
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper0.example.com:2181,zookeeper1.example.com:2181,zookeeper2.example.com:2181
     image: hyperledger/fabric-kafka
     networks:
-      sample: null
+      byfn: null
     ports:
     - 9092:9092/tcp
     - 9093:9093/tcp
     restart: always
-  kafka1_orange_com:
-    container_name: kafka1_orange_com
+  kafka1.example.com:
+    container_name: kafka1.example.com
     depends_on:
-    - zookeeper0_orange_com
-    - zookeeper1_orange_com
-    - zookeeper2_orange_com
+    - zookeeper0.example.com
+    - zookeeper1.example.com
+    - zookeeper2.example.com
     environment:
       KAFKA_BROKER_ID: '1'
       KAFKA_DEFAULT_REPLICATION_FACTOR: '3'
@@ -35,20 +35,20 @@ services:
       KAFKA_MIN_INSYNC_REPLICAS: '2'
       KAFKA_REPLICA_FETCH_MAX_BYTES: '103809024'
       KAFKA_UNCLEAN_LEADER_ELECTION_ENABLE: "false"
-      KAFKA_ZOOKEEPER_CONNECT: zookeeper0_orange_com:2181,zookeeper1_orange_com:2181,zookeeper2_orange_com:2181
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper0.example.com:2181,zookeeper1.example.com:2181,zookeeper2.example.com:2181
     image: hyperledger/fabric-kafka
     networks:
-      sample: null
+      byfn: null
     ports:
     - 10092:9092/tcp
     - 10093:9093/tcp
     restart: always
-  kafka2_orange_com:
-    container_name: kafka2_orange_com
+  kafka2.example.com:
+    container_name: kafka2.example.com
     depends_on:
-    - zookeeper0_orange_com
-    - zookeeper1_orange_com
-    - zookeeper2_orange_com
+    - zookeeper0.example.com
+    - zookeeper1.example.com
+    - zookeeper2.example.com
     environment:
       KAFKA_BROKER_ID: '2'
       KAFKA_DEFAULT_REPLICATION_FACTOR: '3'
@@ -56,20 +56,20 @@ services:
       KAFKA_MIN_INSYNC_REPLICAS: '2'
       KAFKA_REPLICA_FETCH_MAX_BYTES: '103809024'
       KAFKA_UNCLEAN_LEADER_ELECTION_ENABLE: "false"
-      KAFKA_ZOOKEEPER_CONNECT: zookeeper0_orange_com:2181,zookeeper1_orange_com:2181,zookeeper2_orange_com:2181
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper0.example.com:2181,zookeeper1.example.com:2181,zookeeper2.example.com:2181
     image: hyperledger/fabric-kafka
     networks:
-      sample: null
+      byfn: null
     ports:
     - 11092:9092/tcp
     - 11093:9093/tcp
     restart: always
-  kafka3_orange_com:
-    container_name: kafka3_orange_com
+  kafka3.example.com:
+    container_name: kafka3.example.com
     depends_on:
-    - zookeeper0_orange_com
-    - zookeeper1_orange_com
-    - zookeeper2_orange_com
+    - zookeeper0.example.com
+    - zookeeper1.example.com
+    - zookeeper2.example.com
     environment:
       KAFKA_BROKER_ID: '3'
       KAFKA_DEFAULT_REPLICATION_FACTOR: '3'
@@ -77,51 +77,51 @@ services:
       KAFKA_MIN_INSYNC_REPLICAS: '2'
       KAFKA_REPLICA_FETCH_MAX_BYTES: '103809024'
       KAFKA_UNCLEAN_LEADER_ELECTION_ENABLE: "false"
-      KAFKA_ZOOKEEPER_CONNECT: zookeeper0_orange_com:2181,zookeeper1_orange_com:2181,zookeeper2_orange_com:2181
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper0.example.com:2181,zookeeper1.example.com:2181,zookeeper2.example.com:2181
     image: hyperledger/fabric-kafka
     networks:
-      sample: null
+      byfn: null
     ports:
     - 12092:9092/tcp
     - 12093:9093/tcp
     restart: always
-  zookeeper0_orange_com:
-    container_name: zookeeper0_orange_com
+  zookeeper0.example.com:
+    container_name: zookeeper0.example.com
     environment:
       ZOO_MY_ID: '1'
-      ZOO_SERVERS: server.1=zookeeper0_orange_com:2888:3888 server.2=zookeeper1_orange_com:2888:3888
-        server.3=zookeeper2_orange_com:2888:3888
+      ZOO_SERVERS: server.1=zookeeper0.example.com:2888:3888 server.2=zookeeper1.example.com:2888:3888
+        server.3=zookeeper2.example.com:2888:3888
     image: hyperledger/fabric-zookeeper
     networks:
-      sample: null
+      byfn: null
     ports:
     - 2181:2181/tcp
     - 2888:2888/tcp
     - 3888:3888/tcp
     restart: always
-  zookeeper1_orange_com:
-    container_name: zookeeper1_orange_com
+  zookeeper1.example.com:
+    container_name: zookeeper1.example.com
     environment:
       ZOO_MY_ID: '2'
-      ZOO_SERVERS: server.1=zookeeper0_orange_com:2888:3888 server.2=zookeeper1_orange_com:2888:3888
-        server.3=zookeeper2_orange_com:2888:3888
+      ZOO_SERVERS: server.1=zookeeper0.example.com:2888:3888 server.2=zookeeper1.example.com:2888:3888
+        server.3=zookeeper2.example.com:2888:3888
     image: hyperledger/fabric-zookeeper
     networks:
-      sample: null
+      byfn: null
     ports:
     - 12181:2181/tcp
     - 12888:2888/tcp
     - 13888:3888/tcp
     restart: always
-  zookeeper2_orange_com:
-    container_name: zookeeper2_orange_com
+  zookeeper2.example.com:
+    container_name: zookeeper2.example.com
     environment:
       ZOO_MY_ID: '3'
-      ZOO_SERVERS: server.1=zookeeper0_orange_com:2888:3888 server.2=zookeeper1_orange_com:2888:3888
-        server.3=zookeeper2_orange_com:2888:3888
+      ZOO_SERVERS: server.1=zookeeper0.example.com:2888:3888 server.2=zookeeper1.example.com:2888:3888
+        server.3=zookeeper2.example.com:2888:3888
     image: hyperledger/fabric-zookeeper
     networks:
-      sample: null
+      byfn: null
     ports:
     - 22181:2181/tcp
     - 22888:2888/tcp
@@ -224,10 +224,10 @@ services:
     - orderer_orange_com:/var/hyperledger/production/orderer:rw
     working_dir: /opt/gopath/src/github.com/hyperledger/fabric
     depends_on:
-    - kafka0_orange_com
-    - kafka1_orange_com
-    - kafka2_orange_com
-    - kafka3_orange_com
+    - kafka0.example.com
+    - kafka1.example.com
+    - kafka2.example.com
+    - kafka3.example.com
   peer0_org1_orange_com:
     command: peer node start
     depends_on:
