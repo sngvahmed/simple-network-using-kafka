@@ -200,7 +200,7 @@ services:
       ORDERER_KAFKA_RETRY_SHORTINTERVAL: 1s
       ORDERER_KAFKA_RETRY_SHORTTOTAL: 30s
       CONFIGTX_ORDERER_ORDERERTYPE: kafka
-      CONFIGTX_ORDERER_KAFKA_BROKERS: [kafka0_orange_com:9092,kafka1_orange_com:9092,kafka2_orange_com:9092,kafka3_orange_com:9092]
+      CONFIGTX_ORDERER_KAFKA_BROKERS: kafka0_orange_com:9092,kafka1_orange_com:9092,kafka2_orange_com:9092,kafka3_orange_com:9092
       ORDERER_KAFKA_VERBOSE: "true"
       ORDERER_GENERAL_GENESISFILE: /var/hyperledger/orderer/orderer.genesis.block
       ORDERER_GENERAL_GENESISMETHOD: file
