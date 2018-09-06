@@ -195,7 +195,7 @@ services:
     ports:
     - 5984:5984/tcp
   orderer_orange_com:
-    command: sleep 10000; orderer
+    command: orderer
     environment:
       ORDERER_KAFKA_RETRY_SHORTINTERVAL: 1s
       ORDERER_KAFKA_RETRY_SHORTTOTAL: 30s
