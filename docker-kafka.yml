@@ -105,9 +105,9 @@ services:
   orderer_orange_com:
     command: orderer
     environment:
-      ORDERER_KAFKA_RETRY_SHORTINTERVAL: 1s
-      ORDERER_KAFKA_RETRY_SHORTTOTAL: 30s
-      ORDERER_KAFKA_VERBOSE: "true"
+      # ORDERER_KAFKA_RETRY_SHORTINTERVAL: 1s
+      # ORDERER_KAFKA_RETRY_SHORTTOTAL: 30s
+      # ORDERER_KAFKA_VERBOSE: "true"
       ORDERER_GENERAL_GENESISFILE: /var/hyperledger/orderer/orderer.genesis.block
       ORDERER_GENERAL_GENESISMETHOD: file
       ORDERER_GENERAL_LISTENADDRESS: 0.0.0.0
@@ -129,10 +129,8 @@ services:
     - ${SNGV_DIR}/crypto-config/ordererOrganizations/orange_com/orderers/orderer_orange_com/tls:/var/hyperledger/orderer/tls:rw
     - orderer_orange_com:/var/hyperledger/production/orderer:rw
     working_dir: /opt/gopath/src/github.com/hyperledger/fabric
-    depends_on:
-    - kafka0_orange_com
-    links:
-    - kafka0_orange_com
+    # depends_on:
+    # - kafka0_orange_com
   peer0_org1_orange_com:
     command: peer node start
     depends_on:
